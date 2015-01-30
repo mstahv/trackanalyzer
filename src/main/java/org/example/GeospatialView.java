@@ -1,6 +1,8 @@
 package org.example;
 
 import com.vaadin.cdi.CDIView;
+import com.vaadin.data.Property;
+import com.vaadin.data.util.converter.Converter;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
@@ -41,6 +43,16 @@ public class GeospatialView extends MVerticalLayout implements View {
 
     @PostConstruct
     void init() {
+        prepareDateRangeSelector();
+
+        add(new MHorizontalLayout(start, end));
+
+        map.addLayer(new LOpenStreetMapLayer());
+        expand(map);
+        drawRoute();
+    }
+
+    protected void prepareDateRangeSelector() throws Property.ReadOnlyException, Converter.ConversionException {
         start.setRangeStart(periodStart);
         start.setRangeEnd(periodEnd);
         end.setRangeStart(periodStart);
@@ -65,12 +77,6 @@ public class GeospatialView extends MVerticalLayout implements View {
             }
             drawRoute();
         });
-
-        add(new MHorizontalLayout(start, end));
-
-        map.addLayer(new LOpenStreetMapLayer());
-        expand(map);
-        drawRoute();
     }
 
     private void drawRoute() {

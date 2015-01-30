@@ -1,28 +1,30 @@
-package org.example.backend;
+package org.example.strategies;
 
 import com.vaadin.cdi.ViewScoped;
 import com.vaadin.data.Item;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import javax.inject.Inject;
+import com.vaadin.data.util.BeanItem;
+import org.example.backend.GPSRouteService;
 import org.vaadin.addons.lazyquerycontainer.LazyQueryContainer;
 import org.vaadin.addons.lazyquerycontainer.Query;
 import org.vaadin.addons.lazyquerycontainer.QueryDefinition;
 import org.vaadin.addons.lazyquerycontainer.QueryFactory;
-import org.vaadin.viritin.DynaBeanItem;
+
+import javax.inject.Inject;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
  * @author Matti Tahvonen
  */
 @ViewScoped
-public class LazyUpdateContainer extends LazyQueryContainer {
+public class UpdateLazyQueryContainer extends LazyQueryContainer {
 
     private static final int BATCH_SIZE = 40;
 
     @Inject
-    public LazyUpdateContainer(GPSRouteService service) {
+    public UpdateLazyQueryContainer(GPSRouteService service) {
 
         super(new QueryFactory() {
 
@@ -38,7 +40,7 @@ public class LazyUpdateContainer extends LazyQueryContainer {
                     @Override
                     public List<Item> loadItems(int startIndex, int count) {
                         return service.find(startIndex, count).stream()
-                                .map(u -> new DynaBeanItem(u))
+                                .map(u -> new BeanItem(u))
                                 .collect(Collectors.toList());
                     }
 

@@ -1,8 +1,10 @@
-package org.example.backend;
+package org.example.strategies;
 
-import java.util.List;
-import javax.inject.Inject;
+import org.example.backend.GPSRouteService;
 import org.vaadin.viritin.LazyList;
+
+import javax.inject.Inject;
+import java.util.List;
 
 public class LazyUpdateList<Update> extends LazyList<Update> {
 

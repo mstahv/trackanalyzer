@@ -1,41 +1,32 @@
 package org.example;
 
 import com.vaadin.cdi.CDIView;
-import com.vaadin.cdi.UIScoped;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import org.example.backend.GPSRouteService;
-import org.example.backend.Update;
-import org.vaadin.viritin.LazyList;
-import org.vaadin.viritin.LazyList.CountProvider;
-import org.vaadin.viritin.LazyList.PagingProvider;
-import org.vaadin.viritin.fields.MTable;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
-@UIScoped
-@CDIView("")
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import org.example.strategies.ServiceWiringStrategy;
+
+@CDIView
 public class ListView extends MVerticalLayout implements View {
 
 //    @Inject
-//    UpdateContainer container;
+//    BasicInMemoryStrategy strategy;
 //    @Inject
-//    LazyUpdateContainer lazyUpdateContainer;
+//    OptimizedInMemoryStrategy strategy;
 //    @Inject
-//    LazyUpdateList lazyUpdateList;
-//    // Instantiate and configure a Table to list PhoneBookEntries
-//    Table entryList = new Table();
-
-    MTable<Update> table;
+//    JPAContainerStrategy strategy;
+//    @Inject
+//    LazyQueryContainerStrategy strategy;
 
     @Inject
-    GPSRouteService s;
+    ServiceWiringStrategy strategy;
 
     @PostConstruct
     void init() {
-        add(table = new MTable<>(s::fetchUpdates, s::getEntityCount));
+        expand(strategy.getTable());
     }
 
     @Override
