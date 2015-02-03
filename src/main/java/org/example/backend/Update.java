@@ -2,6 +2,7 @@ package org.example.backend;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,7 +18,7 @@ public class Update  implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
@@ -116,6 +117,29 @@ public class Update  implements Serializable {
     @Override
     public String toString() {
         return "Update{" + "id=" + id + ", timestamp=" + timestamp + ", lon=" + lon + ", lat=" + lat + ", imei=" + imei + '}';
+    }
+    
+      @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if(this.id == null) {
+            return false;
+        }
+
+        if (obj instanceof Update && obj.getClass().equals(getClass())) {
+            return this.id.equals(((Update) obj).id);
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 43 * hash + Objects.hashCode(this.id);
+        return hash;
     }
 
 }
