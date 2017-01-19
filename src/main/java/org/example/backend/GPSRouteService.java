@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.vaadin.viritin.LazyList;
 
 /**
  * EJB to hide JPA related stuff from the UI layer.
@@ -39,7 +38,7 @@ public class GPSRouteService {
                 createQuery("SELECT u FROM Update u ORDER BY u.timestamp DESC",
                         Update.class)
                 .setFirstResult(startIndex)
-                .setMaxResults(LazyList.DEFAULT_PAGE_SIZE)
+                .setMaxResults(45)
                 .getResultList();
     }
 

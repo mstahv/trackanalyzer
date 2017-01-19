@@ -6,21 +6,18 @@ import com.vaadin.cdi.CDIUI;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import org.example.strategies.BasicInMemoryStrategy;
-import org.example.strategies.OptimizedInMemoryStrategy;
-import org.example.strategies.OptimizedInMemoryStrategyWithMGrid;
 import org.example.strategies.ServiceWiringStrategy;
-import org.example.strategies.ServiceWiringStrategyWithMGrid;
-import org.vaadin.viritin.layouts.MVerticalLayout;
 
 @CDIUI("")
 @Theme("valo")
@@ -28,13 +25,16 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public class VaadinUI extends UI {
 
     @Inject
-    transient OptimizedInMemoryStrategyWithMGrid strategy;
+    transient BasicInMemoryStrategy strategy;
 
 
     @Override
     protected void init(VaadinRequest request) {
-        MVerticalLayout layout = new MVerticalLayout();
-        layout.expand(strategy.getTable());
+        VerticalLayout layout = new VerticalLayout();
+        Component table = strategy.getTable();
+        layout.addComponent(table);
+        layout.setSizeFull();
+        layout.setExpandRatio(table, 1);
         Button button = new Button("Estimate session size");
         button.addClickListener(e -> {
             VaadinSession current = VaadinSession.getCurrent();
@@ -47,7 +47,7 @@ public class VaadinUI extends UI {
                 Logger.getLogger(VaadinUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        layout.add(button);
+        layout.addComponent(button);
         setContent(layout);
     }
 
