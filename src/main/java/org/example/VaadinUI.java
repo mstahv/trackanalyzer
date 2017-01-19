@@ -13,13 +13,9 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import org.example.strategies.BasicInMemoryStrategy;
-import org.example.strategies.OptimizedInMemoryStrategy;
-import org.example.strategies.OptimizedInMemoryStrategyWithMGrid;
-import org.example.strategies.ServiceWiringStrategy;
-import org.example.strategies.ServiceWiringStrategyWithMGrid;
+import org.example.strategies.BasicInMemoryStrategyWithGrid;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 @CDIUI("")
@@ -28,8 +24,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 public class VaadinUI extends UI {
 
     @Inject
-    transient OptimizedInMemoryStrategyWithMGrid strategy;
-
+    transient BasicInMemoryStrategyWithGrid strategy;
 
     @Override
     protected void init(VaadinRequest request) {
