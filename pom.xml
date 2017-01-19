@@ -12,28 +12,34 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <vaadin.version>7.7.6</vaadin.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.vaadin</groupId>
-            <artifactId>vaadin-java-ee-essentials</artifactId>
-            <version>1.11-SNAPSHOT</version>
-            <type>pom</type>
-            <exclusions>
-                <!-- Using add-ons in this example via viritin, 
-                exclude default widgetset  -->
-                <exclusion>
-                    <groupId>com.vaadin</groupId>
-                    <artifactId>vaadin-client-compiled</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>viritin</artifactId>
+            <version>1.61</version>
         </dependency>
         <dependency>
-            <groupId>org.vaadin.addon</groupId>
-            <artifactId>v-leaflet</artifactId>
-            <version>0.6.1</version>
-            <scope>compile</scope>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-cdi</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-server</artifactId>
+            <version>${vaadin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-themes</artifactId>
+            <version>${vaadin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client-compiled</artifactId>
+            <version>${vaadin.version}</version>
         </dependency>
         <dependency> 
             <groupId>javax</groupId>   
@@ -62,18 +68,6 @@
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>1.0.2.Final</version>
             </plugin>
-            <plugin>
-                <groupId>in.virit.vwscdn</groupId>
-                <artifactId>vwscdn-maven-plugin</artifactId>
-                <version>1.1.7</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
@@ -94,11 +88,4 @@
         </repository>
     </repositories>
     
-    <pluginRepositories>
-        <pluginRepository>
-            <id>viritin</id>
-            <url>http://virit.in/maven2</url>
-        </pluginRepository>
-    </pluginRepositories>
-
 </project>
